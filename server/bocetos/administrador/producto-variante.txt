@@ -1,0 +1,49 @@
++----+------------------------+------------------+-----------+--------------------+
+| ID | Nombre                 | Categoría        | Precio    | Acciones           |
++----+------------------------+------------------+-----------+--------------------+
+| 1  | Vestido Midi Satinado  | Vestidos         | $45.000   | [Editar] [Stock ⚙️]|
+| 2  | Remera Oversize Top    | Remeras          | $18.000   | [Editar] [Stock ⚙️]|
++----+------------------------+------------------+-----------+--------------------+
+
+
+El clic: Hacés clic en el botón [Stock ⚙️] o entrás a editar
+
+
+=======================================================================
+PANEL ADMIN > PRODUCTOS > EDITAR: [ Vestido Midi Satinado ]
+=======================================================================
+
+MATRIZ DE STOCK Y VARIANTES EXISTENTES:
+-----------------------------------------------------------------------
+Color: Rojo (#FF0000)  ---> [ 📷 Ver/Cargar Imágenes de este Color ]
+  • Talle S  --> SKU: [ VEST-ROJ-S ] | Stock: [ 3 ]  [ 🗑️ ]
+  • Talle M  --> SKU: [ VEST-ROJ-M ] | Stock: [ 5 ]  [ 🗑️ ]
+
+Color: Negro (#000000) ---> [ 📷 Ver/Cargar Imágenes de este Color ]
+  • Talle S  --> SKU: [ VEST-NEG-S ] | Stock: [ 0 ]  [ 🗑️ ]
+  • Talle M  --> SKU: [ VEST-NEG-M ] | Stock: [ 2 ]  [ 🗑️ ]
+
+-----------------------------------------------------------------------
+AGREGAR NUEVA COMBINACIÓN:
+Color: [ Verde Esmeralda [v] ]   Talle: [ L [v] ]   Stock: [ 10 ]
+[ + Añadir esta variante ]
+
+=======================================================================
+[ Cancelar ]                                         [ 💾 Guardar Todo ]
+=======================================================================
+
+
+
+id_variante: Identificador único de la variante.
+
+id_producto: A qué producto general pertenece (ej: el ID del Vestido Midi).
+
+id_color: Qué color específico es (ej: Rojo).
+
+id_talle: Qué talle específico es (ej: M).
+
+sku: El código único de inventario para control tuyo (ej: VEST-SAT-ROJ-M).
+
+stock: La cantidad exacta de unidades que tenés guardadas en el depósito (ej: 5).
+
+precio_override (Opcional): Por si querés que un talle o color especial salga más caro o más barato, aunque por lo general suele heredar el precio base del producto.

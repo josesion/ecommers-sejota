@@ -1,0 +1,48 @@
+=======================================================================
+PANEL ADMIN > VENTAS Y ÓRDENES
+=======================================================================
+
+| N° Orden | Cliente        | Total   | Estado Pedido | Estado Pago | Fecha       | Acciones       |
+| :------- | :------------- | :------ | :------------ | :---------- | :---------- | :------------- |
+| #ORD-1042| María Gómez    | $45.000 | 🟡 pendiente  | 🟢 aprobado | Hoy, 18:30  | [ Ver Detalle ]|
+| #ORD-1041| Carla Pérez    | $18.000 | 🔵 enviado    | 🟢 aprobado | Ayer, 14:15 | [ Ver Detalle ]|
+| #ORD-1040| Sofía Ruiz     | $92.000 | 🟢 completado | 🟢 aprobado | 24 Oct      | [ Ver Detalle ]|
+
+=======================================================================..
+
+
+=======================================================================
+PANEL ADMIN > DETALLE DE ORDEN: [ #ORD-1042 ]
+=======================================================================
+
+INFORMACIÓN GENERAL:
+• Estado del Pedido: [ Pendiente [v] ]  (Acá podés cambiarlo a: enviado, completado, etc.)
+• Estado del Pago:   [ Aprobado ]     (Viene de Mercado Pago u otra pasarela)
+• Método de Pago:    Tarjeta de Crédito
+• Total a Cobrar:    $45.000
+
+-----------------------------------------------------------------------
+DATOS DE ENVÍO DE LA CLIENTA:
+• Nombre de Contacto:  María Gómez
+• Teléfono:            +54 9 387 412-3456
+• Dirección:           Mitre 450, Piso 2 B
+• Ciudad:              Salta Capital
+• Código Postal:       4400
+
+-----------------------------------------------------------------------
+PRODUCTOS COMPRADOS EN ESTA ORDEN:
+(Estos vienen de la tabla detalle_orden / items)
+• Vestido Midi Satinado (Color: Rojo, Talle: M) x 1  --> $45.000
+
+-----------------------------------------------------------------------
+[ 💾 Guardar Cambios de Estado ]               [ 🖨️ Imprimir Etiqueta ]
+=======================================================================
+
+
+ Nota de Diseño: El campo id_usuario INT NULL en la tabla ordenes
+1. ¿Por qué el campo permite NULL (ON DELETE SET NULL)?
+Se diseña como un campo opcional (NULL) por un motivo fundamental de integridad contable y cumplimiento legal (derecho al olvido / privacidad):
+
+Si un usuario registrado realiza una compra y tiempo después decide eliminar su cuenta de la plataforma, el sistema no debe romper ni borrar el historial de ventas.
+
+Gracias a la regla ON DELETE SET NULL, al borrarse el usuario de la tabla usuarios, su registro de la orden permanece intacto en la base de datos para fines contables y de auditoría, pasando el id_usuario a valor NULL.

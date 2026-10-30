@@ -1,0 +1,12 @@
+=======================================================================
+TIENDA WEB (CLIENTE) - ESTRUCTURA DE VISTAS
+=======================================================================
+
+ 1. INICIO (Home)         --> Banners, categorías destacadas, novedades.
+ 2. CATÁLOGO / TIENDA     --> Grilla de productos, filtros por categoría/talle/color.
+ 3. FICHA DE PRODUCTO     --> Fotos (R2), selector de color/talle, stock real y botón comprar.
+ 4. CARRITO DE COMPRAS    --> Resumen de ítems, cantidades y cálculo de subtotal.
+ 5. CHECKOUT / PAGO       --> Formulario de envío, resumen y confirmación de orden.
+ 6. MI CUENTA / MIS COMPRAS -> Historial de pedidos y estado de sus envíos.
+
+=======================================================================

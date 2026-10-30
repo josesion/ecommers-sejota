@@ -1,0 +1,291 @@
+/* ============================================================
+   BOTÓN (tema Maison Noir)
+   ============================================================ */
+
+.boton_personalizado {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--texto-principal);
+  border: 1px solid var(--borde-hover);
+  border-radius: var(--radio-sm);
+  font-family: var(--fuente-principal);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-menu);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--duracion) var(--ease-ui),
+    border-color var(--duracion) var(--ease-ui),
+    color var(--duracion) var(--ease-ui),
+    box-shadow var(--duracion) var(--ease-ui),
+    transform var(--duracion) var(--ease-ui);
+}
+
+/* Luz que sigue al cursor */
+.boton_personalizado::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    circle 90px at var(--x, 50%) var(--y, 50%),
+    color-mix(in srgb, var(--acento) 24%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--duracion) var(--ease-ui);
+  pointer-events: none;
+}
+
+.boton_personalizado:hover::before {
+  opacity: 1;
+}
+
+.boton_personalizado:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--sombra-md);
+  border-color: var(--texto-secundario);
+}
+
+.boton_personalizado:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: var(--sombra-sm);
+  transition-duration: 0.08s;
+}
+
+/* ===== Iconos ===== */
+.boton_icono {
+  display: inline-flex;
+  transition: transform 0.35s var(--ease-ui);
+}
+
+.boton_personalizado[data-logo="Go"]:hover .boton_icono {
+  transform: translateX(4px);
+}
+.boton_personalizado[data-logo="Back"]:hover .boton_icono {
+  transform: translateX(-4px);
+}
+.boton_personalizado[data-logo="Add"]:hover .boton_icono {
+  transform: rotate(90deg) scale(1.15);
+}
+.boton_personalizado[data-logo="Cancel"]:hover .boton_icono {
+  transform: rotate(90deg);
+}
+.boton_personalizado[data-logo="Edit"]:hover .boton_icono {
+  transform: rotate(-12deg) scale(1.1);
+}
+.boton_personalizado[data-logo="List"]:hover .boton_icono {
+  transform: scale(1.12);
+}
+.boton_personalizado[data-logo="Check"]:hover .boton_icono {
+  animation: pop 0.45s var(--ease-ui);
+}
+.boton_personalizado[data-logo="Delete"]:hover .boton_icono {
+  animation: vibrar 0.4s ease-in-out;
+}
+
+/* ===== Variantes ===== */
+.boton_personalizado.aceptar {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: var(--fondo-principal);
+}
+.boton_personalizado.aceptar:hover {
+  background: color-mix(in srgb, var(--acento) 88%, white);
+  border-color: var(--acento);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--acento) 35%, transparent);
+}
+
+/* Brillo que cruza el botón aceptar */
+.boton_personalizado.aceptar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(105deg, transparent, rgb(255 255 255 / 0.35), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+}
+.boton_personalizado.aceptar:hover::after {
+  transform: translateX(350%) skewX(-20deg);
+  transition: transform 0.8s var(--ease-ui);
+}
+
+.boton_personalizado.agregar {
+  border-color: var(--exito);
+  color: var(--exito);
+}
+.boton_personalizado.agregar:hover {
+  border-color: var(--exito);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--exito) 25%, transparent);
+}
+
+.boton_personalizado.cancelar {
+  border-color: var(--borde);
+  color: var(--texto-secundario);
+}
+.boton_personalizado.cancelar:hover {
+  color: var(--texto-principal);
+}
+
+.boton_personalizado.eliminar {
+  border-color: var(--peligro);
+  color: var(--peligro);
+}
+.boton_personalizado.eliminar:hover {
+  border-color: var(--peligro);
+  color: var(--texto-principal);
+  background: color-mix(in srgb, var(--peligro) 85%, black);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--peligro) 30%, transparent);
+}
+
+.boton_personalizado.editar,
+.boton_personalizado.listar {
+  border-color: var(--borde-hover);
+  color: var(--texto-secundario);
+}
+.boton_personalizado.editar:hover,
+.boton_personalizado.listar:hover {
+  color: var(--texto-principal);
+}
+
+.boton_personalizado.flechas {
+  padding: 10px 14px;
+  border-color: var(--borde);
+}
+
+/* ===== Foco de teclado ===== */
+.boton_personalizado:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* ===== Deshabilitado (atributo disabled, sin spinner) ===== */
+.boton_personalizado.boton_deshabilitado,
+.boton_personalizado:disabled {
+  opacity: 0.6;
+  color: var(--texto-deshabilitado);
+  border-color: var(--borde);
+  background: var(--fondo-secundario);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.boton_personalizado:disabled::before,
+.boton_personalizado:disabled::after {
+  display: none;
+}
+
+/* ===== Cargando: spinner + barra de progreso inferior =====
+   Sigue en el orden de tab (aria-disabled), pero sin efectos de hover. */
+.boton_personalizado.boton_cargando {
+  cursor: progress;
+  opacity: 0.85;
+}
+.boton_personalizado[aria-disabled="true"]:hover,
+.boton_personalizado[aria-disabled="true"]:active {
+  transform: none;
+  box-shadow: none;
+}
+.boton_personalizado.boton_cargando.aceptar:hover {
+  background: var(--acento);
+}
+.boton_personalizado[aria-disabled="true"]::after {
+  display: none;
+}
+.boton_personalizado.boton_cargando::before,
+.boton_personalizado.boton_cargando:hover::before {
+  display: block;
+  inset: auto auto 0 0;
+  width: 40%;
+  height: 2px;
+  background: var(--acento);
+  opacity: 1;
+  animation: barra 1.2s var(--ease-ui) infinite;
+}
+
+.spinner_girando {
+  animation: girar 0.9s linear infinite;
+}
+
+/* ===== Keyframes ===== */
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+@keyframes barra {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(250%); }
+}
+@keyframes pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+@keyframes vibrar {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-2px) rotate(-6deg); }
+  75%      { transform: translateX(2px) rotate(6deg); }
+}
+
+/* ============================================================
+   ACCESIBILIDAD
+   ============================================================ */
+
+/* Tu regla global de reduced-motion pone animation-duration en 0.01ms,
+   lo que haría que el spinner parpadee como loco. Lo dejamos lento y la barra quieta. */
+@media (prefers-reduced-motion: reduce) {
+  .spinner_girando {
+    animation-duration: 2s !important;
+  }
+  .boton_personalizado.boton_cargando::before {
+    animation: none !important;
+    width: 100%;
+  }
+}
+
+/* Colores forzados (modo de alto contraste de Windows) */
+@media (forced-colors: active) {
+  .boton_personalizado {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+    box-shadow: none;
+    forced-color-adjust: none;
+  }
+  .boton_personalizado::before,
+  .boton_personalizado::after {
+    display: none;
+  }
+  .boton_personalizado:hover,
+  .boton_personalizado:focus-visible {
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+  .boton_personalizado:focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 2px;
+  }
+  .boton_personalizado:disabled,
+  .boton_personalizado.boton_deshabilitado {
+    background: Canvas;
+    color: GrayText;
+    border-color: GrayText;
+    opacity: 1;
+  }
+  /* En carga la barra inferior sigue siendo visible */
+  .boton_personalizado.boton_cargando::before {
+    display: block;
+    background: ButtonText;
+  }
+}

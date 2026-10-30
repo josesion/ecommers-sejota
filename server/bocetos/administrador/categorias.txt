@@ -1,0 +1,26 @@
++-----------------------------------------------------------------------+
+|  PANEL ADMIN  >  CATEGORÍAS  >  [ + Nueva Categoría ]                 |
++-----------------------------------------------------------------------+
+|                                                                       |
+|  Crear Nueva Categoría                                                |
+|  -------------------------------------------------------------------  |
+|                                                                       |
+|  Nombre de la Categoría (*)                                           |
+|  [ Vestidos de Fiesta                                               ] |
+|                                                                       |
+|  Slug (URL amigable) [Generado automáticamente]                        |
+|  [ vestidos-de-fiesta                                               ] |
+|  ℹ️  La URL será: tutienda.com/categorias/vestidos-de-fiesta          |
+|                                                                       |
+|  Descripción (Opcional)                                                |
+|  +-----------------------------------------------------------------+  |
+|  | Encontrá los mejores vestidos para graduaciones y eventos...     |  |
+|  +-----------------------------------------------------------------+  |
+|                                                                       |
+|  Estado de la Categoría                                               |
+|  (o) Visible en la tienda (Activo)                                    |
+|  ( ) Oculta temporalmente (Inactivo)                                  |
+|                                                                       |
+|  -------------------------------------------------------------------  |
+|  [ Cancelar ]                                 [ 💾 Guardar Categoría ]|
++-----------------------------------------------------------------------+

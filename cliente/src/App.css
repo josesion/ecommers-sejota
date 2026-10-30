@@ -1,0 +1,99 @@
+:root {
+  color-scheme: dark;
+
+  /* Fondos */
+  --fondo-principal: #0b0b0c;
+  --fondo-secundario: #141416;
+  --fondo-elevado: #1b1b1e;
+  --fondo-barra: #38383b;
+
+  /* Bordes */
+  --borde: #2a2a2e;
+  --borde-hover: #4a4a50;
+
+  /* Texto */
+  --texto-principal: #f3f1ed;
+  --texto-secundario: #b9b5ae;
+  --texto-deshabilitado: #8a867f;
+
+  /* Acento y estados (apagados, para que no rompan la estética noir) */
+  --acento: #b79b6a;
+  --exito: #7f9c82;
+  --peligro: #d0675e;
+  --aviso: #c2a15a;
+  --foco: #b79b6a;
+
+  /* Tipografía */
+  --fuente-titulos: "Bodoni Moda", "Playfair Display", Georgia, serif;
+  --fuente-principal: "Inter", system-ui, -apple-system, sans-serif;
+  --tracking-menu: 0.12em;
+  --tracking-etiqueta: 0.08em;
+
+  /* Forma y espacio */
+  --radio-sm: 4px;
+  --radio-md: 8px;
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 16px;
+  --espacio-4: 24px;
+  --espacio-5: 40px;
+  --espacio-6: 64px;
+
+  /* Movimiento y sombras */
+  --ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+  --duracion: 0.25s;
+  --sombra-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --sombra-md: 0 10px 30px rgb(0 0 0 / 0.45);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
+  background: var(--fondo-principal);
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--fuente-principal);
+  color: var(--texto-principal);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+.fondo-imagen {
+  background-image: url("./fondos-imagen/marmol-negro.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  display: block;
+}

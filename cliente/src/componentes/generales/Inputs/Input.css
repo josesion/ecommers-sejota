@@ -1,0 +1,118 @@
+/* Input — según DISENO.md secciones 3, 5, 6 y 7: solo tokens, sin
+   `transition: all`, foco visible, estado de error y movimiento reducido. */
+
+.input_contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  width: 100%;
+}
+
+.input_label {
+  font-family: var(--fuente-principal);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-etiqueta);
+  color: var(--texto-secundario);
+}
+
+.input_requerido {
+  color: var(--texto-principal);
+}
+
+.input_campo {
+  width: 90%;
+  min-height: 30px; /* área táctil cómoda */
+  padding: var(--espacio-2) var(--espacio-3);
+
+  /* 1rem evita el zoom automático de iOS al enfocar */
+  font-family: var(--fuente-principal);
+  font-size: 1rem;
+  color: var(--texto-principal);
+
+  background: var(--fuente-principal);
+  border: 1px solid var(--fondo-secundario);
+  border-radius: var(--radio-sm);
+
+  transition:
+    border-color 250ms var(--ease-ui),
+    background-color 250ms var(--ease-ui);
+}
+
+.input_campo::placeholder {
+  color: color-mix(in srgb, var(--texto-secundario) 70%, transparent);
+}
+
+@media (hover: hover) {
+  .input_campo:hover:not(:disabled) {
+    border-color: var(--borde-hover);
+  }
+}
+
+.input_campo:focus-visible {
+  border-color: var(--texto-principal);
+  outline: 2px solid var(--texto-principal);
+  outline-offset: 2px;
+}
+
+/* Autocompletado del navegador: mantiene el fondo oscuro */
+.input_campo:-webkit-autofill {
+  -webkit-text-fill-color: var(--texto-principal);
+  box-shadow: 0 0 0 1000px var(--fondo-secundario) inset;
+  caret-color: var(--texto-principal);
+}
+
+.input_campo:disabled {
+  color: var(--texto-deshabilitado);
+  border-color: var(--borde);
+  cursor: not-allowed;
+}
+
+/* ---------- Mensajes ---------- */
+
+.input_mensaje {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+
+/* ---------- Error ---------- */
+
+.input_contenedor--error .input_campo {
+  border-color: var(--color-error);
+}
+
+.input_mensaje--error {
+  color: var(--color-error);
+}
+
+/* ---------- Accesibilidad ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .input_campo {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .input_campo {
+    border-width: 2px;
+  }
+}
+
+@media (forced-colors: active) {
+  .input_campo {
+    border: 1px solid FieldText;
+  }
+  .input_contenedor--error .input_campo {
+    border-width: 2px;
+  }
+  .input_campo:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+  .input_campo:focus-visible {
+    outline: 2px solid Highlight;
+  }
+}

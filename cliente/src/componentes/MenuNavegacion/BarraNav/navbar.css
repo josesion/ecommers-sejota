@@ -1,0 +1,298 @@
+/* ============================================================
+   NAVBAR + DRAWER (tema Maison Noir)
+   Mobile first: el menú horizontal aparece desde 768px.
+   ============================================================ */
+
+/* ===== Barra ===== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: color-mix(in srgb, var(--fondo-principal) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--borde);
+}
+
+.navbar_barra {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  max-width: 1200px;
+  min-height: 64px;
+  margin: 0 auto;
+  padding: 0 var(--espacio-3);
+  box-sizing: border-box;
+}
+
+.navbar_marca {
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: var(--texto-principal);
+  text-decoration: none;
+  border-radius: var(--radio-sm);
+}
+
+.navbar_marca:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 4px;
+}
+
+/* Botones de abrir / cerrar el drawer */
+.navbar_toggle,
+.drawer_cerrar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  color: var(--texto-principal);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--duracion) var(--ease-ui),
+    background var(--duracion) var(--ease-ui),
+    color var(--duracion) var(--ease-ui);
+}
+
+.navbar_toggle:hover,
+.drawer_cerrar:hover {
+  border-color: var(--borde-hover);
+  background: var(--fondo-elevado);
+}
+
+.navbar_toggle:focus-visible,
+.drawer_cerrar:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.navbar_toggle[aria-expanded="true"] {
+  color: var(--acento);
+  border-color: var(--acento);
+}
+
+/* ===== Desktop: oculto en móvil ===== */
+.navbar_desktop {
+  display: none;
+}
+
+.navbar_lista,
+.drawer_lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ===== Fondo oscuro del drawer ===== */
+.drawer_fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  background: color-mix(in srgb, var(--fondo-principal) 70%, transparent);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.35s var(--ease-ui),
+    visibility 0s 0.35s;
+}
+
+.drawer_fondo[data-abierto] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.35s var(--ease-ui),
+    visibility 0s;
+}
+
+/* ===== Drawer ===== */
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  width: min(86vw, 340px);
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--fondo-secundario);
+  border-right: 1px solid var(--borde);
+  box-shadow: var(--sombra-md);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  /* Cerrado: fuera de pantalla y fuera del orden de tab / lector */
+  transform: translateX(-100%);
+  will-change: transform;
+  visibility: hidden;
+  transition:
+    transform 0.4s var(--ease-ui),
+    visibility 0s 0.4s;
+}
+
+.drawer[data-abierto] {
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform 0.4s var(--ease-ui),
+    visibility 0s;
+}
+
+.drawer_cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espacio-3);
+  border-bottom: 1px solid var(--borde);
+}
+
+.drawer_titulo {
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: var(--texto-principal);
+}
+
+.drawer_lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  padding: var(--espacio-3);
+}
+
+/* ===== Itemnav dentro del drawer: lista vertical, icono destacado ===== */
+.drawer .item_nav a {
+  display: flex;
+  width: 100%;
+  min-height: 56px;
+  gap: var(--espacio-3);
+  padding: 0 var(--espacio-3);
+  font-size: 0.85rem;
+}
+
+.drawer .item_nav_icono {
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-sm);
+  background: var(--fondo-principal);
+}
+
+.drawer .item_nav a[aria-current="page"] .item_nav_icono {
+  border-color: var(--acento);
+}
+
+/* La línea inferior respeta el padding propio del drawer */
+.drawer .item_nav a:hover::after,
+.drawer .item_nav a:focus-visible::after,
+.drawer .item_nav a[aria-current="page"]::after {
+  width: calc(100% - var(--espacio-3) * 2);
+}
+
+/* Los items entran escalonados al abrir */
+.drawer[data-abierto] .item_nav {
+  animation: drawer_item 0.5s var(--ease-ui) backwards;
+}
+.drawer[data-abierto] .item_nav:nth-child(1) { animation-delay: 0.12s; }
+.drawer[data-abierto] .item_nav:nth-child(2) { animation-delay: 0.18s; }
+.drawer[data-abierto] .item_nav:nth-child(3) { animation-delay: 0.24s; }
+.drawer[data-abierto] .item_nav:nth-child(4) { animation-delay: 0.30s; }
+.drawer[data-abierto] .item_nav:nth-child(5) { animation-delay: 0.36s; }
+.drawer[data-abierto] .item_nav:nth-child(n + 6) { animation-delay: 0.42s; }
+
+@keyframes drawer_item {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== Desktop (768px o más) ===== */
+@media (min-width: 768px) {
+  .navbar_toggle,
+  .drawer,
+  .drawer_fondo {
+    display: none;
+  }
+
+  .navbar_barra {
+    padding: 0 var(--espacio-4);
+  }
+
+  .navbar_desktop {
+    display: block;
+    margin-left: auto;
+  }
+
+  .navbar_lista {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+  }
+}
+
+/* ============================================================
+   ACCESIBILIDAD
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer_fondo,
+  .navbar_toggle,
+  .drawer_cerrar {
+    transition: none !important;
+  }
+  .drawer[data-abierto] .item_nav {
+    animation: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .navbar,
+  .drawer,
+  .drawer_cabecera {
+    border-color: var(--texto-secundario);
+  }
+  .navbar_toggle,
+  .drawer_cerrar {
+    border-color: var(--texto-secundario);
+  }
+}
+
+/* Colores forzados (modo de alto contraste de Windows) */
+@media (forced-colors: active) {
+  .navbar,
+  .drawer {
+    background: Canvas;
+    border-color: CanvasText;
+  }
+  .navbar_toggle,
+  .drawer_cerrar {
+    border-color: ButtonText;
+    color: ButtonText;
+  }
+  .navbar_toggle:focus-visible,
+  .drawer_cerrar:focus-visible {
+    outline-color: Highlight;
+  }
+  .drawer .item_nav_icono {
+    border-color: CanvasText;
+  }
+}
+
+@media print {
+  .navbar,
+  .drawer,
+  .drawer_fondo {
+    display: none;
+  }
+}

@@ -1,0 +1,156 @@
+/* ============================================================
+   ERROR — aviso inline (tema Maison Noir)
+   ============================================================ */
+
+.error-contenedor {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 14px 20px;
+  background:
+    radial-gradient(
+      circle 140px at 0% 50%,
+      color-mix(in srgb, var(--peligro) 9%, transparent),
+      transparent 100%
+    ),
+    var(--fondo-secundario);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-sm);
+  animation: error_entrar 0.4s var(--ease-ui);
+}
+
+/* Filo superior que se dibuja de izquierda a derecha */
+.error-contenedor::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--peligro),
+    color-mix(in srgb, var(--peligro) 15%, transparent)
+  );
+  transform-origin: left;
+  animation: error_linea 0.8s var(--ease-ui);
+  pointer-events: none;
+}
+
+/* ===== Marca: icono de trazo fino dentro de un anillo ===== */
+.error-marca {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid color-mix(in srgb, var(--peligro) 45%, transparent);
+  border-radius: 50%;
+  color: var(--peligro);
+}
+
+/* Anillo que respira lento, sin llegar a ser un radar */
+.error-marca::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--peligro);
+  border-radius: 50%;
+  opacity: 0;
+  animation: error_respirar 3s ease-out infinite;
+  pointer-events: none;
+}
+
+.error-icono {
+  animation: error_pop 0.5s var(--ease-ui);
+}
+
+/* ===== Texto ===== */
+.error-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.error-titulo {
+  font-family: var(--fuente-principal);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-etiqueta);
+  text-transform: uppercase;
+  color: var(--peligro);
+}
+
+.error-mensaje {
+  margin: 0;
+  font-family: var(--fuente-principal);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--texto-principal);
+  overflow-wrap: anywhere;
+  animation: error_texto 0.4s var(--ease-ui);
+}
+
+/* ===== Keyframes ===== */
+@keyframes error_entrar {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes error_linea {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes error_pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes error_respirar {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes error_texto {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ==========================================================================
+   ACCESIBILIDAD — reduced-motion / high-contrast / print
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .error-contenedor,
+  .error-contenedor::before,
+  .error-icono,
+  .error-mensaje {
+    animation: none !important;
+  }
+  .error-marca::after {
+    display: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .error-contenedor {
+    border-width: 2px;
+    border-color: var(--peligro);
+  }
+  .error-marca {
+    border-color: var(--peligro);
+  }
+}
+
+@media print {
+  .error-contenedor {
+    display: none;
+  }
+}

@@ -1,0 +1,50 @@
+=======================================================================
+PANEL ADMIN > PRODUCTOS > [ + Nuevo Producto ]
+=======================================================================
+
+DATOS GENERALES DEL PRODUCTO:
+-----------------------------------------------------------------------
+Nombre del Producto (*) : [ Vestido Midi Satinado                   ]
+Categoría (*)           : [ Vestidos                     [v] ]
+Precio Base ($) (*)     : [ 45000.00                         ]
+
+Slug (URL amigable)     : [ vestido-midi-satinado            ]
+
+Descripción del Producto:
++---------------------------------------------------------------------+
+| Vestido midi confeccionado en satén suave. Breteles regulables y    |
+| tajo lateral discreto. Ideal para eventos de noche o coctel.        |
++---------------------------------------------------------------------+
+
+GUÍA DE TALLES:
++---------------------------------------------------------------------+
+| Medidas de la prenda (en centímetros):                             |
+|                                                                     |
+| • Talle S  (36): Busto 85-90 cm  | Cintura 65-70 cm  | Cadera 90-95  |
+| • Talle M  (38): Busto 90-95 cm  | Cintura 70-75 cm  | Cadera 95-100 |
+| • Talle L  (40): Busto 95-100 cm | Cintura 75-80 cm  | Cadera 100-105|
+|                                                                     |
+| 📌 Nota: Las medidas son tomadas sobre la prenda plana.             |
++---------------------------------------------------------------------+
+[ 📷 Subir imagen de tabla de medidas (Opcional) ]
+
+-----------------------------------------------------------------------
+[ Cancelar ]                                   [ 💾 Guardar Producto ]
+=======================================================================
+
+
+
+
+id_producto: Identificador único.
+
+id_categoria: Llave foránea para saber a qué categoría pertenece (ej: Vestidos).
+
+nombre: Título principal (ej: Vestido Midi Satinado).
+
+slug: URL amigable (ej: vestido-midi-satinado).
+
+descripcion: Detalle largo de la prenda (telas, cuidados, formato).
+
+precio_base: El precio de referencia.
+
+guia_talles: Opcional, puede ser un texto o un link a una tabla de medidas.

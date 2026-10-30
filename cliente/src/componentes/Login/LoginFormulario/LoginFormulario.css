@@ -1,0 +1,78 @@
+/* LoginFormulario — DISENO.md §§2–10: solo tokens, clases login-form-*,
+   transiciones exactas, hover gateado, foco visible, movimiento reducido,
+   contraste, forced-colors y responsive 1024/768/480. */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.login-form:focus-visible {
+  outline: 2px solid var(--texto-principal);
+  outline-offset: 2px;
+}
+
+.login-form-error {
+  margin: 0 0 var(--espacio-3);
+  padding: var(--espacio-2) var(--espacio-3);
+  font-family: var(--fuente-principal);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--texto-principal);
+  background: var(--fondo-principal);
+  border: 1px solid var(--borde-hover);
+  border-radius: var(--radio-sm);
+  transition: border-color 250ms var(--ease-ui);
+}
+
+.login-form-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  transition: opacity 250ms var(--ease-ui);
+}
+
+@media (hover: hover) {
+  .login-form-error:hover {
+    border-color: var(--texto-principal);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-form-error,
+  .login-form-acciones {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .login-form-error {
+    border-width: 2px;
+  }
+}
+
+@media (forced-colors: active) {
+  .login-form-error {
+    color: CanvasText;
+    border: 1px solid CanvasText;
+  }
+}
+
+@media (max-width: 1024px) {
+  .login-form {
+    gap: var(--espacio-3);
+  }
+}
+
+@media (max-width: 768px) {
+  .login-form {
+    gap: var(--espacio-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-error {
+    font-size: 0.8rem;
+  }
+}

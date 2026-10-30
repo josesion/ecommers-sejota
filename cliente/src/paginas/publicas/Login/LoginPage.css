@@ -1,0 +1,112 @@
+/* LoginPage — DISENO.md §§2–10: solo tokens, clases login-*, transición
+   declarada en la tarjeta, hover gateado, foco visible, movimiento reducido,
+   contraste, forced-colors y responsive 1024/768/480. El fondo de mármol lo
+   aporta `.fondo-imagen` global en `main.tsx`; aquí solo se centra la
+   tarjeta encima. */
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: var(--espacio-4);
+  box-sizing: border-box;
+}
+
+.login-tarjeta {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--espacio-5);
+  background: var(--fondo-secundario);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-md);
+  box-shadow: var(--sombra-md);
+  box-sizing: border-box;
+  transition: border-color 250ms var(--ease-ui);
+}
+
+.login-titulo {
+  margin: 0 0 var(--espacio-2);
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-menu);
+  color: var(--texto-principal);
+  text-align: center;
+}
+
+.login-subtitulo {
+  margin: 0 0 var(--espacio-4);
+  font-family: var(--fuente-principal);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  letter-spacing: var(--tracking-menu);
+  color: var(--texto-secundario);
+  text-align: center;
+}
+
+.login-tarjeta:focus-visible {
+  outline: 2px solid var(--texto-principal);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .login-tarjeta:hover {
+    border-color: var(--borde-hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-tarjeta {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .login-tarjeta {
+    border-width: 2px;
+  }
+}
+
+@media (forced-colors: active) {
+  .login-tarjeta {
+    border: 1px solid CanvasText;
+  }
+  .login-titulo {
+    color: CanvasText;
+  }
+  .login-subtitulo {
+    color: CanvasText;
+  }
+}
+
+@media (max-width: 1024px) {
+  .login-tarjeta {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login {
+    padding: var(--espacio-3);
+  }
+  .login-tarjeta {
+    max-width: 100%;
+    padding: var(--espacio-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .login {
+    padding: var(--espacio-2);
+  }
+  .login-tarjeta {
+    padding: var(--espacio-3);
+  }
+  .login-titulo {
+    font-size: 1.5rem;
+  }
+}

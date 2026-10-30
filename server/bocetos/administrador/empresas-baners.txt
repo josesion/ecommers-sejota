@@ -1,0 +1,28 @@
+=======================================================================
+PANEL ADMIN > GESTIÓN DE EMPRESAS SPONSORS
+=======================================================================
+
+[ + Nueva Empresa ]   [🔍 Buscar empresa o contacto... ]
+
+| ID  | Empresa / Marca       | Contacto          | Teléfono / WhatsApp | Estado     | Acciones          |
+| :-- | :-------------------- | :---------------- | :------------------ | :--------- | :---------------- |
+| #01 | Zapatillas Top S.A.   | Carlos Gómez      | +54 9 387 511-2233  | 🟢 Activo  | [Editar] [Banners]|
+| #02 | Indumentaria Urbana   | Sofía Martínez    | +54 9 387 622-4455  | 🟢 Activo  | [Editar] [Banners]|
+| #03 | Bebidas Energéticas   | Juan Pérez        | +54 9 387 733-9988  | 🔴 Inactivo| [Editar] [Banners]|
+
+=======================================================================
+
+
+=======================================================================
+PANEL ADMIN > GESTIÓN DE BANNERS Y PUBLICIDAD
+=======================================================================
+
+[ + Nuevo Banner ]   [ Filtrar por: Todos | Propios | Patrocinados ]
+
+| Img | Título / Campaña      | Tipo        | Empresa Sponsor     | Posición       | Vigencia          | Estado   | Acciones |
+| :-- | :-------------------- | :---------- | :------------------ | :------------- | :---------------- | :------- | :------- |
+| 🖼️  | Promo 2x1 Vestidos    | 🟢 Propio   | — (N/A)             | Home Principal | 01/11 al 15/11    | 🟢 Activo| [Editar] |
+| 🖼️  | Banner Calzado Verano | 🟡 Patrocin.| Zapatillas Top S.A. | Sidebar Catál. | Todo Noviembre    | 🟢 Activo| [Editar] |
+| 🖼️  | Anuncio Bebidas Top   | 🟡 Patrocin.| Bebidas Energéticas | Home Inferior  | 10/10 al 25/10    | 🔴 Venc. | [Editar] |
+
+=======================================================================

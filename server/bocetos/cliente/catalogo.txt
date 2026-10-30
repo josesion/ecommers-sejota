@@ -1,0 +1,83 @@
+En pc
+
+=======================================================================
+TIENDA WEB > CATÁLOGO DE PRODUCTOS
+=======================================================================
+
+[ 🌐 NAVBAR: Logo | Catálogo | Buscar | Carrito | Mi Cuenta ]
+-----------------------------------------------------------------------
+
+PANEL DE FILTROS (Izquierda)      | GRILLA DE PRODUCTOS (Derecha)
+----------------------------------|------------------------------------
+📂 **CATEGORÍAS**                  | Mostrando 24 de 120 productos
+[ ] Todos                         | Ordenar por: [ Más recientes [v] ]
+[X] Vestidos                      | -----------------------------------
+[ ] Remeras                       | 
+[ ] Pantalones                    | [ 🖼️ FOTO VESTIDO ]
+                                  | **Vestido Midi Satinado**
+🎨 **COLOR**                      | 🔴 🔵 🟢 *(Colores disponibles)*
+[🔴] Rojo  [🔵] Azul              | **$45.000**
+                                  | [ Ver Detalle ]
+📏 **TALLE**                      | 
+[ ] S   [X] M   [ ] L   [ ] XL    | [ 🖼️ FOTO REMERA ]
+                                  | **Remera Oversize Top**
+💰 **PRECIO**                     | ⚫ ⚪ *(Colores disponibles)*
+Desde: [ $10.000 ] Hasta: [ $60k ]| **$18.000**
+                                  | [ Ver Detalle ]
+----------------------------------| 
+[ 🧹 Limpiar Filtros ]            | [ ◀ Anterior ]  1  2  3  [ Siguiente ▶ ]
+=======================================================================
+
+
+En Celular
+
+=======================================================================
+TIENDA WEB > CATÁLOGO (VISTA CELULAR / RESPONSIVE)
+=======================================================================
+
+[ ☰ Menú ]   [ 🛍️ Tienda Online ]   [ 🔍 ]   [ 🛒 (2) ]
+-----------------------------------------------------------------------
+
+[ 🎛️ Filtrar y Ordenar (3) ]  <-- Botón flotante o fijo arriba
+-----------------------------------------------------------------------
+Mostrando 24 resultados
+
+[ 🖼️ FOTO VESTIDO ]
+**Vestido Midi Satinado**
+🔴 🔵 🟢 
+**$45.000**
+[ Ver Detalle ]
+
+[ 🖼️ FOTO REMERA ]
+**Remera Oversize Top**
+⚫ ⚪ 
+**$18.000**
+[ Ver Detalle ]
+
+-----------------------------------------------------------------------
+[ ◀ Anterior ]  1  2  3  [ Siguiente ▶ ]
+=======================================================================
+
+¿Qué pasa cuando la clienta toca el botón [ 🎛️ Filtrar y Ordenar ]?
+Se desliza una ventana emergente desde abajo o desde un costado de la pantalla del celular (un Bottom Sheet o Drawer), cómoda para usar con el pulgar:
+
+Plaintext
+=======================================================================
+          FILTROS Y ORDENAMIENTO (Panel que se abre)
+=======================================================================
+Ordenar por: [ Más recientes          [v] ]
+-----------------------------------------------------------------------
+📂 **CATEGORÍAS**
+[X] Vestidos   [ ] Remeras   [ ] Pantalones
+-----------------------------------------------------------------------
+🎨 **COLOR**
+[🔴] Rojo   [🔵] Azul   [🟢] Verde
+-----------------------------------------------------------------------
+📏 **TALLE**
+[ ] S   [X] M   [ ] L   [ ] XL
+-----------------------------------------------------------------------
+💰 **PRECIO**
+Desde: [ $10.000 ] Hasta: [ $60.000 ]
+-----------------------------------------------------------------------
+[ 🧹 Limpiar ]          [ Aplicar Filtros (24 resultados) ]
+=======================================================================

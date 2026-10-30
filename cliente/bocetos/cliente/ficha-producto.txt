@@ -1,0 +1,33 @@
+=======================================================================
+TIENDA WEB > FICHA DE PRODUCTO (DETALLE)
+=======================================================================
+
+[ 🌐 NAVBAR: Logo | Catálogo | Buscar | Carrito | Mi Cuenta ]
+-----------------------------------------------------------------------
+
+[ EN CELULAR: Se ve en columna / EN PC: Galería a la izquierda y datos a la derecha ]
+
+┌─────────────────────────┐   **Vestido Midi Satinado**
+│                         │   ⭐ 4.8 (12 opiniones)
+│    [ 🖼️ FOTO PRINCIPAL ]│   
+│     (Cambia dinámicam.) │   **$45.000**
+│                         │   
+│  [Mini1] [Mini2] [Mini3]│   Descripción:
+└─────────────────────────┘   Vestido largo de satén con tirantes finos, 
+                              ideal para eventos nocturnos. Forrado.
+--------------------------
+                              🎨 **COLOR DISPONIBLE:**
+                              [🔴 Rojo]  [🔵 Azul]  [🟢 Verde]
+                              *(Al hacer clic en un color, la foto grande 
+                              cambia automáticamente a la de ese color)*
+
+                              📏 **TALLE:**
+                              [ S ]  [ M ]  [ L ]  [ XL (Sin Stock) ]
+                              *(El talle XL aparece tachado o deshabilitado 
+                              porque en la tabla variantes stock = 0)*
+
+                              📦 **Stock disponible:** Quedan 3 unidades
+
+                              -----------------------------------------
+                              [ 🛒 Agregar al Carrito ]  [ ⚡ Comprar Ahora ]
+=======================================================================

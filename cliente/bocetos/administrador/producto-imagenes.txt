@@ -1,0 +1,55 @@
+-----------------------------------------------------------------------
+GALERÍA RÁPIDA: Vestido Midi Satinado (Color: Rojo)
+-----------------------------------------------------------------------
+
+[ 🖼️ Previsualización ]  
+• Archivo:      vestido-midi-rojo-frente.jpg
+• URL R2:       https://pub-xxx.r2.dev/productos/1/rojo-frente.jpg
+• Orden:        [ 1 ]  
+• Es Principal: [ ☑️ Sí ] 
+• Acciones:     [ 🔄 Cambiar archivo ]  [ 🗑️ Eliminar ]
+
+-----------------------------------------------------------------------
+
+[ 🖼️ Previsualización ]  
+• Archivo:      vestido-midi-rojo-espalda.jpg
+• URL R2:       https://pub-xxx.r2.dev/productos/1/rojo-espalda.jpg
+• Orden:        [ 2 ]  
+• Es Principal: [ ⬜ No ] 
+• Acciones:     [ 🔄 Cambiar archivo ]  [ 🗑️ Eliminar ]
+
+-----------------------------------------------------------------------
+[ 📁 Subir nueva foto para este color ]
+-----------------------------------------------------------------------
+[ ✖️ Cerrar y volver a la matriz ]
+-----------------------------------------------------------------------
+
+
+id_variante: Identificador único de la variante (Clave primaria autoincremental).
+
+Ejemplo: 1, 2, 15.
+
+id_producto: A qué producto general pertenece la variante (Clave foránea).
+
+Ejemplo: 1 (hace referencia al Vestido Midi Satinado).
+
+id_color: Qué color específico compone esta variante (Clave foránea).
+
+Ejemplo: 1 (Rojo).
+
+id_talle: Qué talle específico compone esta variante (Clave foránea).
+
+Ejemplo: 2 (Talle M).
+
+sku: El código único de inventario para control interno y logística.
+
+Ejemplo: VEST-SAT-ROJ-M.
+
+stock: La cantidad exacta de unidades físicas disponibles en el depósito para esa combinación exacta de color y talle.
+
+Ejemplo: 5.
+
+precio_override (Opcional): Permite sobre escribir el precio base del producto por si una variante especial (por ejemplo, un talle extra grande o una edición limitada) tiene un costo diferente. Si queda en NULL, hereda automáticamente el precio general del producto.
+
+Ejemplo: NULL (o 48000.00 si quisiera cobrarlo más caro).
+

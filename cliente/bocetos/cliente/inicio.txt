@@ -1,0 +1,35 @@
+=======================================================================
+TIENDA WEB > INICIO (HOME)
+=======================================================================
+
+[ 🌐 NAVBAR: Logo | Catálogo | Buscar | Carrito | Mi Cuenta ]
+-----------------------------------------------------------------------
+
+1. 🖼️ BANNER PRINCIPAL (Hero Section)
+   [ Imagen grande rotativa o estática promocionando la temporada o 2x1 ]
+   *(Sale de la tabla `banners` donde posicion = 'home_principal' y tipo = 'propio')*
+
+-----------------------------------------------------------------------
+
+2. 🏷️ CATEGORÍAS DESTACADAS (Burbujas o Tarjetas rápidas)
+   ( 👗 Vestidos )   ( 👕 Remeras )   ( 👖 Pantalones )   ( 🥿 Calzado )
+   *(Sale de un SELECT * FROM categorias)*
+
+-----------------------------------------------------------------------
+
+3. 🔥 NOVEDADES / ÚLTIMOS INGRESOS (Grilla de Productos)
+   | [Foto Vestido]     | [Foto Remera Top]   | [Foto Jean Slim]    |
+   | Vestido Midi Rojo  | Remera Oversize     | Jean Mom Azul       |
+   | $45.000            | $18.000             | $32.000             |
+   | [ Ver Producto ]   | [ Ver Producto ]    | [ Ver Producto ]    |
+   *(Sale de: SELECT * FROM productos ORDER BY creado_en DESC LIMIT 8)*
+
+-----------------------------------------------------------------------
+
+4. 📢 BANNER DE SPONSORS / PUBLICIDAD (Mitad o pie de página)
+   [ Publicidad de "Zapatillas Top S.A." o marca aliada ]
+   *(Sale de la tabla `banners` donde tipo = 'patrocinado' y está dentro del rango de fechas activo)*
+
+-----------------------------------------------------------------------
+[ 📄 FOOTER: Redes sociales, políticas de cambio, contacto ]
+=======================================================================

@@ -1,0 +1,438 @@
+/* ============================================================
+   INPUTS — campo base reutilizable (tema Maison Noir)
+   ============================================================ */
+
+.inputs_contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== Etiqueta ===== */
+.inputs_contenedor label {
+  font-family: var(--fuente-principal);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-etiqueta);
+  color: var(--texto-deshabilitado);
+  transition: color var(--duracion) var(--ease-ui);
+}
+
+.inputs_contenedor label:empty {
+  display: none;
+}
+
+.inputs_contenedor:focus-within label {
+  color: var(--acento);
+}
+
+.inputs_contenedor[data-disabled] label {
+  opacity: 0.6;
+}
+
+.inputs_requerido {
+  color: var(--peligro);
+  margin-left: 2px;
+}
+
+/* ===== Caja del campo (borde, fondo, luz y línea de foco) ===== */
+.inputs_wrapper {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--fondo-secundario);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-sm);
+  transition:
+    border-color var(--duracion) var(--ease-ui),
+    box-shadow var(--duracion) var(--ease-ui),
+    background var(--duracion) var(--ease-ui);
+}
+
+/* Luz que sigue al cursor */
+.inputs_wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    circle 120px at var(--x, 50%) var(--y, 50%),
+    color-mix(in srgb, var(--acento) 14%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--duracion) var(--ease-ui);
+  pointer-events: none;
+}
+
+/* Línea que crece desde el centro al enfocar */
+.inputs_wrapper::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--acento);
+  transform: translateX(-50%);
+  transition: width 0.4s var(--ease-ui);
+  pointer-events: none;
+}
+
+.inputs_wrapper:hover {
+  border-color: var(--borde-hover);
+}
+.inputs_wrapper:hover::before {
+  opacity: 1;
+}
+
+.inputs_wrapper:focus-within {
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--acento) 16%, transparent);
+}
+.inputs_wrapper:focus-within::after {
+  width: 100%;
+}
+
+/* ===== Input ===== */
+.inputs {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--texto-principal);
+  font-family: var(--fuente-principal);
+  font-size: 0.875rem;
+  color-scheme: dark; /* calendario y selector de fecha oscuros */
+}
+
+.inputs::placeholder {
+  color: var(--texto-deshabilitado);
+  transition: opacity var(--duracion) var(--ease-ui);
+}
+.inputs:focus::placeholder {
+  opacity: 0.4;
+}
+
+/* El foco lo muestra la caja, no el input */
+.inputs:focus-visible {
+  outline: none;
+}
+
+/* Autocompletado del navegador sin el fondo blanco/amarillo */
+.inputs:-webkit-autofill,
+.inputs:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--texto-principal);
+  caret-color: var(--texto-principal);
+  box-shadow: 0 0 0 1000px var(--fondo-secundario) inset;
+  transition: background-color 9999s ease-out;
+}
+
+/* ===== Solo lectura / deshabilitado ===== */
+.inputs_wrapper[data-readonly] {
+  background: var(--fondo-principal);
+}
+.inputs_wrapper[data-readonly] .inputs {
+  color: var(--texto-secundario);
+  cursor: default;
+}
+.inputs_wrapper[data-readonly]:hover {
+  border-color: var(--borde);
+}
+.inputs_wrapper[data-readonly]:hover::before,
+.inputs_wrapper[data-readonly]::after {
+  display: none;
+}
+.inputs_wrapper[data-readonly]:focus-within {
+  border-color: var(--borde-hover);
+  box-shadow: none;
+}
+
+.inputs_wrapper[data-disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.inputs_wrapper[data-disabled] .inputs {
+  cursor: not-allowed;
+  color: var(--texto-deshabilitado);
+}
+.inputs_wrapper[data-disabled]::before,
+.inputs_wrapper[data-disabled]::after {
+  display: none;
+}
+
+/* ===== Error ===== */
+.inputs_contenedor[data-error] .inputs_wrapper {
+  border-color: var(--peligro);
+  animation: vibrar_campo 0.35s ease-in-out;
+}
+.inputs_contenedor[data-error] .inputs_wrapper::after {
+  background: var(--peligro);
+}
+.inputs_contenedor[data-error] .inputs_wrapper:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--peligro) 20%, transparent);
+}
+.inputs_contenedor[data-error]:focus-within label {
+  color: var(--peligro);
+}
+
+.error_espacio {
+  min-height: 16px;
+}
+
+.mensaje_error {
+  margin: 0;
+  font-family: var(--fuente-principal);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--peligro);
+  animation: entrar_error 0.3s var(--ease-ui);
+}
+
+/* ===== Checkbox / Radio: casilla a la izquierda, label al lado ===== */
+.inputs_contenedor--casilla {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 4px;
+}
+
+/* Visualmente la casilla va primero; en el DOM el label sigue primero */
+.inputs_contenedor--casilla .inputs_wrapper {
+  order: -1;
+}
+
+.inputs_contenedor--casilla label {
+  flex: 1;
+  min-width: 0;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--texto-principal);
+  cursor: pointer;
+}
+
+/* El error ocupa su propia línea; sin error no reserva espacio */
+.inputs_contenedor--casilla .error_espacio {
+  flex-basis: 100%;
+}
+.inputs_contenedor--casilla .error_espacio:empty {
+  min-height: 0;
+}
+
+.inputs_wrapper[data-tipo="checkbox"],
+.inputs_wrapper[data-tipo="radio"] {
+  display: inline-flex;
+  width: fit-content;
+  overflow: visible;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+.inputs_wrapper[data-tipo="checkbox"]::before,
+.inputs_wrapper[data-tipo="checkbox"]::after,
+.inputs_wrapper[data-tipo="radio"]::before,
+.inputs_wrapper[data-tipo="radio"]::after {
+  display: none;
+}
+.inputs_wrapper[data-tipo="checkbox"]:focus-within,
+.inputs_wrapper[data-tipo="radio"]:focus-within {
+  box-shadow: none;
+}
+
+.inputs[type="checkbox"],
+.inputs[type="radio"] {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  accent-color: var(--acento);
+  cursor: pointer;
+}
+.inputs[type="checkbox"]:focus-visible,
+.inputs[type="radio"]:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 3px;
+}
+.inputs[type="checkbox"]:disabled,
+.inputs[type="radio"]:disabled {
+  cursor: not-allowed;
+}
+
+/* ===== File ===== */
+.inputs[type="file"] {
+  padding: 8px 10px;
+  cursor: pointer;
+  color: var(--texto-secundario);
+}
+
+.inputs[type="file"]::file-selector-button {
+  margin-right: 10px;
+  padding: 6px 14px;
+  background: var(--acento);
+  color: var(--fondo-principal);
+  border: 1px solid var(--acento);
+  border-radius: var(--radio-sm);
+  font-family: var(--fuente-principal);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-menu);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--duracion) var(--ease-ui),
+    color var(--duracion) var(--ease-ui);
+}
+.inputs[type="file"]::file-selector-button:hover {
+  background: transparent;
+  color: var(--acento);
+}
+
+/* ===== Toggle de contraseña ===== */
+.inputs_toggle_password {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radio-sm);
+  color: var(--texto-secundario);
+  cursor: pointer;
+  transition:
+    color var(--duracion) var(--ease-ui),
+    background var(--duracion) var(--ease-ui);
+}
+.inputs_toggle_password:hover {
+  color: var(--texto-principal);
+  background: var(--fondo-elevado);
+}
+.inputs_toggle_password[aria-pressed="true"] {
+  color: var(--acento);
+}
+.inputs_toggle_password:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 1px;
+}
+
+.inputs_toggle_icono {
+  display: inline-flex;
+  animation: pop_icono 0.35s var(--ease-ui);
+}
+
+/* ===== Keyframes ===== */
+@keyframes vibrar_campo {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-4px); }
+  40%      { transform: translateX(4px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(2px); }
+}
+@keyframes entrar_error {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop_icono {
+  0%   { transform: scale(0.6); opacity: 0.4; }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================================
+   ACCESIBILIDAD
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .inputs_wrapper,
+  .inputs_wrapper::before,
+  .inputs_wrapper::after,
+  .inputs,
+  .inputs_contenedor label,
+  .inputs_toggle_password,
+  .inputs[type="file"]::file-selector-button {
+    transition: none !important;
+  }
+  .inputs_contenedor[data-error] .inputs_wrapper,
+  .mensaje_error,
+  .inputs_toggle_icono {
+    animation: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .inputs_wrapper {
+    border-width: 2px;
+  }
+  .inputs_wrapper:focus-within {
+    outline: 3px solid var(--acento);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+  .inputs_contenedor[data-error] .inputs_wrapper:focus-within {
+    outline-color: var(--peligro);
+  }
+}
+
+/* Colores forzados (modo de alto contraste de Windows) */
+@media (forced-colors: active) {
+  .inputs_wrapper::before,
+  .inputs_wrapper::after {
+    display: none;
+  }
+  .inputs_wrapper {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+  .inputs_wrapper:focus-within {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .inputs_wrapper[data-tipo="checkbox"],
+  .inputs_wrapper[data-tipo="radio"] {
+    border: none;
+    outline: none;
+  }
+  .inputs[type="checkbox"]:focus-visible,
+  .inputs[type="radio"]:focus-visible {
+    outline-color: Highlight;
+  }
+  .inputs_wrapper[data-disabled] {
+    opacity: 1;
+    border-color: GrayText;
+  }
+  .inputs_wrapper[data-disabled] .inputs {
+    color: GrayText;
+  }
+  /* El error no depende solo del color: el borde pasa a trazos */
+  .inputs_contenedor[data-error] .inputs_wrapper {
+    border-style: dashed;
+    border-width: 2px;
+  }
+  .inputs_toggle_password:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@media print {
+  .mensaje_error,
+  .inputs[type="file"]::file-selector-button {
+    display: none;
+  }
+}

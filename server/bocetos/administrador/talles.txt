@@ -1,0 +1,25 @@
+
+
+=======================================================================
+PANEL ADMIN > CATÁLOGO > TALLES > [ + Nuevo Talle ]
+=======================================================================
+
+CREAR NUEVO TALLE:
+-----------------------------------------------------------------------
+
+Nombre del Talle (*) : [ M                                           ]
+
+Número de Orden (*)  : [ 2  ]
+                       ℹ️ Sirve para mostrar los talles ordenados 
+                          en la tienda (Ej: 1=S, 2=M, 3=L).
+
+-----------------------------------------------------------------------
+[ Cancelar ]                                       [ 💾 Guardar Talle ]
+=======================================================================
+
+
+id_talle: Identificador único (ej: 1, 2, 3).
+
+nombre: El nombre del talle que ve la clienta (ej: "S", "M", "L" o "36", "38").
+
+orden: Un número entero (ej: 1, 2, 3) que le indica al sistema en qué posición mostrarlo en la pantalla para que queden alineados de menor a mayor.

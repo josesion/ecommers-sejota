@@ -1,0 +1,172 @@
+/* ============================================================
+   ITEM DE NAVEGACIÓN (tema Maison Noir)
+   ============================================================ */
+
+.item_nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item_nav a {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: 44px; /* área de toque cómoda */
+  padding: 0 var(--espacio-3);
+  box-sizing: border-box;
+  border-radius: var(--radio-sm);
+  color: var(--texto-secundario);
+  font-family: var(--fuente-principal);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-menu);
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--duracion) var(--ease-ui);
+}
+
+/* Luz que sigue al cursor */
+.item_nav a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    circle 80px at var(--x, 50%) var(--y, 50%),
+    color-mix(in srgb, var(--acento) 16%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--duracion) var(--ease-ui);
+  pointer-events: none;
+}
+
+/* Línea que crece desde el centro */
+.item_nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--acento);
+  transform: translateX(-50%);
+  transition: width 0.4s var(--ease-ui);
+  pointer-events: none;
+}
+
+/* ===== Hover y foco ===== */
+.item_nav a:hover,
+.item_nav a:focus-visible {
+  color: var(--texto-principal);
+}
+.item_nav a:hover::before {
+  opacity: 1;
+}
+.item_nav a:hover::after,
+.item_nav a:focus-visible::after {
+  width: calc(100% - var(--espacio-3) * 2);
+}
+
+.item_nav a:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.item_nav a:active {
+  transform: scale(0.97);
+}
+
+/* ===== Icono ===== */
+.item_nav_icono {
+  display: inline-flex;
+  font-size: 1.1rem;
+  transition:
+    transform 0.35s var(--ease-ui),
+    color var(--duracion) var(--ease-ui);
+}
+.item_nav a:hover .item_nav_icono,
+.item_nav a:focus-visible .item_nav_icono {
+  transform: translateY(-1px) scale(1.12);
+  color: var(--acento);
+}
+
+/* ===== Página actual ===== */
+.item_nav a[aria-current="page"] {
+  color: var(--acento);
+}
+.item_nav a[aria-current="page"]::after {
+  width: calc(100% - var(--espacio-3) * 2);
+}
+.item_nav a[aria-current="page"] .item_nav_icono {
+  color: var(--acento);
+}
+
+/* ============================================================
+   ACCESIBILIDAD
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .item_nav a,
+  .item_nav a::before,
+  .item_nav a::after,
+  .item_nav_icono {
+    transition: none !important;
+  }
+  .item_nav a:active,
+  .item_nav a:hover .item_nav_icono,
+  .item_nav a:focus-visible .item_nav_icono {
+    transform: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .item_nav a {
+    color: var(--texto-principal);
+  }
+  .item_nav a::after {
+    height: 3px;
+  }
+  .item_nav a:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* Colores forzados (modo de alto contraste de Windows):
+   la página actual no puede depender del color ni de fondos. */
+@media (forced-colors: active) {
+  .item_nav a {
+    color: LinkText;
+    forced-color-adjust: none;
+  }
+  .item_nav a::before,
+  .item_nav a::after {
+    display: none;
+  }
+  .item_nav a:hover,
+  .item_nav a:focus-visible {
+    color: Highlight;
+    text-decoration: underline;
+  }
+  .item_nav a:focus-visible {
+    outline: 2px solid CanvasText;
+  }
+  .item_nav a[aria-current="page"] {
+    color: Highlight;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+  }
+}
+
+@media print {
+  .item_nav a::before,
+  .item_nav a::after {
+    display: none;
+  }
+}
