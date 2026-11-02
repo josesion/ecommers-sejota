@@ -32,16 +32,9 @@ export interface LoginEstado {
   error: Record<BloqueLogin, string | null>;
   /** Banner visible por bloque, `null` si no hay banner. */
   banner: Record<BloqueLogin, BannerLogin | null>;
+  /** Errores específicos por campo devueltos por Zod (ej. { password: "..." }) */
+  erroresCampos: Partial<Record<keyof LoginForm, string>>;
 }
-
-/** Acciones aceptadas por `loginReducer`. */
-export type LoginAccion =
-  | { tipo: "SET_CAMPO"; campo: keyof LoginForm; valor: string }
-  | { tipo: "SET_CARGA"; bloque: BloqueLogin; carga: boolean }
-  | { tipo: "SET_ERROR"; bloque: BloqueLogin; error: string | null }
-  | { tipo: "SET_BANNER"; bloque: BloqueLogin; banner: BannerLogin | null }
-  | { tipo: "SET_USUARIO"; user: LoginUser | null }
-  | { tipo: "RESET_FORM" };
 
 /**
  * Crea el estado inicial del login. Única fuente de verdad.
@@ -55,17 +48,29 @@ export function initialLogin(): LoginEstado {
     carga: { formulario: false },
     error: { formulario: null },
     banner: { formulario: null },
+    erroresCampos: {}, // 👈 Inicializado vacío
   };
 }
+
+/** Acciones aceptadas por `loginReducer`. */
+export type LoginAccion =
+  | { tipo: "SET_CAMPO"; campo: keyof LoginForm; valor: string }
+  | { tipo: "SET_CARGA"; bloque: BloqueLogin; carga: boolean }
+  | { tipo: "SET_ERROR"; bloque: BloqueLogin; error: string | null }
+  | { tipo: "SET_USUARIO"; user: LoginUser | null }
+  | { tipo: "SET_ERRORES_CAMPOS"; errores: Partial<Record<keyof LoginForm, string>> } 
+  | { tipo: "RESET_FORM" };
+
+
 
 /**
  * Calcula el siguiente estado del login de forma pura e inmutable.
  *
- * `SET_CAMPO` limpia el error del bloque (el usuario está corrigiendo).
+ * `SET_CAMPO` limpia el error del bloque y el error específico del campo que se está modificando.
  * `SET_ERROR`, `SET_USUARIO` y `RESET_FORM` bajan la carga del bloque.
  *
- * @param estado - Estado actual.
- * @param accion - Acción a aplicar.
+ * @param estado Estado actual.
+ * @param accion Acción a aplicar.
  * @returns Nuevo estado sin mutar el anterior.
  */
 export function loginReducer(
@@ -73,12 +78,18 @@ export function loginReducer(
   accion: LoginAccion,
 ): LoginEstado {
   switch (accion.tipo) {
-    case "SET_CAMPO":
+    case "SET_CAMPO": {
+      // Copiamos los errores de campos y limpiamos el del campo que el usuario está editando
+      const nuevosErroresCampos = { ...estado.erroresCampos };
+      delete nuevosErroresCampos[accion.campo];
+
       return {
         ...estado,
         form: { ...estado.form, [accion.campo]: accion.valor },
         error: { ...estado.error, formulario: null },
+        erroresCampos: nuevosErroresCampos,
       };
+    }
     case "SET_CARGA":
       return {
         ...estado,
@@ -90,17 +101,20 @@ export function loginReducer(
         error: { ...estado.error, [accion.bloque]: accion.error },
         carga: { ...estado.carga, [accion.bloque]: false },
       };
-    case "SET_BANNER":
-      return {
-        ...estado,
-        banner: { ...estado.banner, [accion.bloque]: accion.banner },
-      };
+
     case "SET_USUARIO":
       return {
         ...estado,
         user: accion.user,
         carga: { ...estado.carga, formulario: false },
         error: { ...estado.error, formulario: null },
+        erroresCampos: {},
+      };
+    case "SET_ERRORES_CAMPOS":
+      return {
+        ...estado,
+        carga: { ...estado.carga, formulario: false }, // Bajamos carga si hubo error de validación
+        erroresCampos: accion.errores,
       };
     case "RESET_FORM":
       return initialLogin();

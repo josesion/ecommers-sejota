@@ -20,8 +20,10 @@ export interface LoginFormularioProps {
   inputs: LoginInput[];
   /** Petición en curso: deshabilita campos y botón. */
   carga: boolean;
-  /** Mensaje del banner, `null` si no hay error. */
+  /** Mensaje del banner global, `null` si no hay error. */
   error: string | null;
+  /** Errores específicos por campo devueltos por Zod (ej. { password: "..." }) */
+  erroresCampos?: Partial<Record<keyof LoginForm, string>>; // 👈 Agregado aquí
   /** `id` del `h1` de la página para `aria-labelledby`. */
   idTitulo: string;
   /** `id` del subtítulo para `aria-describedby`; solo si existe. */
@@ -32,21 +34,21 @@ export interface LoginFormularioProps {
   onSubmit: (evento: FormEvent<HTMLFormElement>) => void;
 }
 
-/** `id` estable del banner de error. */
+/** `id` estable del banner de error global. */
 export const ID_ERROR_LOGIN = "login-form-error";
 
 /**
  * Pinta el banner (si hay error) y el `form` con los dos `Input` y el
  * `Boton` de envío.
  *
- * @param props - Valores, metadatos, estado e identificadores de la página.
+ * @param props Valores, metadatos, estado e identificadores de la página.
  * @returns Banner de error y formulario accesible.
  */
 export function LoginFormulario({
   valores,
   inputs,
   carga,
-  error,
+  erroresCampos = {},
   idTitulo,
   idSubtitulo,
   onChange,
@@ -54,35 +56,34 @@ export function LoginFormulario({
 }: LoginFormularioProps) {
   return (
     <>
-      {error && (
-        <p id={ID_ERROR_LOGIN} className="login-form-error" role="alert">
-          {error}
-        </p>
-      )}
-
       <form
         className="login-form"
         aria-labelledby={idTitulo}
         {...(idSubtitulo ? { "aria-describedby": idSubtitulo } : {})}
         onSubmit={onSubmit}
       >
-        {inputs.map((campo) => (
-          <Inputs
-            key={campo.name}
-            label={campo.label}
-            name={campo.name}
-            type={campo.type}
-            placeholder={campo.placeholder}
-            autoComplete={campo.autoComplete}
-            required={campo.required}
-            aria-required={campo.required}
-            aria-invalid={error ? true : undefined}
-            aria-describedby={error ? ID_ERROR_LOGIN : undefined}
-            value={valores[campo.name]}
-            onChange={onChange}
-            disabled={carga}
-          />
-        ))}
+        {inputs.map((campo) => {
+          // Verificamos si este campo específico tiene un error de Zod
+          const errorDelCampo = erroresCampos[campo.name as keyof LoginForm];
+
+          return (
+            <Inputs
+              key={campo.name}
+              label={campo.label}
+              name={campo.name}
+              type={campo.type}
+              placeholder={campo.placeholder}
+              autoComplete={campo.autoComplete}
+              required={campo.required}
+              aria-required={campo.required}
+              aria-invalid={errorDelCampo ? true : undefined}
+              value={valores[campo.name as keyof LoginForm]}
+              onChange={onChange}
+              disabled={carga}
+              error={errorDelCampo}
+            />
+          );
+        })}
 
         <div className="login-form-acciones">
           <Boton

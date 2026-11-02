@@ -46,6 +46,7 @@ export default function LoginPage() {
           inputs={inputsFormulario}
           carga={state.carga["formulario"]}
           error={state.error["formulario"]}
+          erroresCampos={state.erroresCampos} // 👈 ¡Acá le pasamos el diccionario de errores de Zod!
           idTitulo="login-titulo"
           idSubtitulo="login-subtitulo"
           onChange={handlers.onChange}

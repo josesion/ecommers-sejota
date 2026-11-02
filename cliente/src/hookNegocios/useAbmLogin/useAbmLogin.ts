@@ -40,7 +40,7 @@ export const inputsFormulario: LoginInput[] = [
 /**
  * Adapta el formulario antes de enviarlo (hoy lo pasa tal cual).
  *
- * @param form - Valores actuales del formulario.
+ * @param form Valores actuales del formulario.
  * @returns Cuerpo `{ email, password }` para `postLogin`.
  */
 export function mapDeFormulario(form: LoginForm): LoginForm {
@@ -50,11 +50,25 @@ export function mapDeFormulario(form: LoginForm): LoginForm {
 /**
  * Normaliza el mensaje de error para la interfaz.
  *
- * @param mensaje - Mensaje crudo de la capa fetch.
+ * @param mensaje Mensaje crudo de la capa fetch.
  * @returns Texto visible en castellano, nunca vacío.
  */
 export function mapTextoError(mensaje: string): string {
   return mensaje || "No se pudo iniciar sesión";
+}
+
+/**
+ * Mapea la lista de errores detallados del backend (Zod) a un objeto plano por campo.
+ */
+export function mapErroresCampos(details?: any[]): Partial<Record<keyof LoginForm, string>> {
+  if (!details || !Array.isArray(details)) return {};
+
+  return details.reduce((acc, curr) => {
+    if (curr && curr.campo && curr.message) {
+      acc[curr.campo as keyof LoginForm] = curr.message;
+    }
+    return acc;
+  }, {} as Partial<Record<keyof LoginForm, string>>);
 }
 
 /** Configuración del módulo: sin filtros ni paginación (solo formulario). */
@@ -63,7 +77,11 @@ const config: ConfigLogin = {
   servicios: { registro: postLogin },
   inputsFormulario,
   inicialFormData: initialLogin().form,
-  maps: { mapDeFormulario, mapTextoError },
+  maps: { 
+    mapDeFormulario, 
+    mapTextoError, 
+    mapErroresCampos 
+  },
 };
 
 /**

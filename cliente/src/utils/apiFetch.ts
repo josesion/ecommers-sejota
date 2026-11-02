@@ -105,6 +105,26 @@ export async function apiFetch<T>(
 
         if (!response.ok) {
 
+
+            //Detectar si el token expiró o la sesión es inválida
+            if (response.status === 401) {
+            // Disparamos el evento personalizado para que cualquier parte de la app se entere
+                window.dispatchEvent(new CustomEvent('sesion-expirada'));
+                
+                return {
+                    error: true,
+                    message: "Sesión expirada",
+                    statusCode: 401,
+                    code: "SESSION_EXPIRED",
+                    meta: {
+                        clientTimestamp,
+                        durationMs: calcDuration(),
+                        responseSize
+                    }
+                };
+            }
+
+
             let raw: BackendRawResponse | null = null;
 
             try {
