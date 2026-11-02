@@ -23,7 +23,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://192.168.0.26:5173",
+      "http://192.168.1.12:5173",
     ],
     credentials: true,
   }),
@@ -57,7 +57,8 @@ app.use((err: Error, __req: Request, res: Response, __next: NextFunction) => {
     message = "Error de validación de datos";
     code = "VALIDATION_ERROR";
 
-    errorsDetails = (err as z.ZodError).issues.map((zodIssue) => ({
+    // Mapeamos los errores de Zod extrayendo el campo exacto y su mensaje
+    errorsDetails = err.issues.map((zodIssue) => ({
       campo: zodIssue.path.join("."),
       message: zodIssue.message,
       code: zodIssue.code,
@@ -72,6 +73,7 @@ app.use((err: Error, __req: Request, res: Response, __next: NextFunction) => {
     code = "INVALID_JSON_SYNTAX";
   }
 
+  // Pasamos los detalles a la función de respuesta
   enviarResponseError(res, statusCode, message, code, errorsDetails);
 });
 

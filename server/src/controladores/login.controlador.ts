@@ -45,6 +45,7 @@ const loginUsuario = async (req: Request, res: Response) => {
   const config = MAPA_LOGIN[resultado.code] ?? ERROR_SERVIDOR;
   const esExito = config.status >= 200 && config.status < 300;
 
+
   if (!esExito) {
     return enviarResponseError(
       res,
@@ -63,11 +64,14 @@ const loginUsuario = async (req: Request, res: Response) => {
   });
 
   // El token viaja solo en la cookie, nunca en el body.
-  return enviarResponse(res, config.status, resultado.message || config.msg, {
-    id: datos.id,
-    rol: datos.rol,
-    email: datos.email,
-  });
+  return enviarResponse(
+    res, 
+    config.status, 
+    resultado.message || config.msg, 
+    { id: datos.id, rol: datos.rol, email: datos.email},
+    undefined,
+    resultado.code
+  );
 };
 
 export const method = {

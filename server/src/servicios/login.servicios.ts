@@ -22,8 +22,9 @@ import { generarToken } from "../utils/jwt";
 const login = async (
   dataEntrada: LoginInputs,
 ): Promise<TipadoData<LoginRespuesta>> => {
-  const dataValida = LoginSchema.parse(dataEntrada);
 
+  const dataValida = LoginSchema.parse(dataEntrada);
+ 
   const busqueda = await loginData.buscarUsuarioPorEmail({
     email: dataValida.email,
   });
