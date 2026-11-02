@@ -7,8 +7,8 @@
  */
 
 import type { ChangeEvent, FormEvent } from "react";
-import { Input } from "../../generales/Inputs/Input";
-import { Boton } from "../../generales/Boton/Boton";
+import { Inputs } from "../../personales/Inputs/Inputs";
+import { Boton } from "../../personales/Boton/Boton";
 import type { LoginForm, LoginInput } from "../../../tipado/login";
 import "./LoginFormulario.css";
 
@@ -67,7 +67,7 @@ export function LoginFormulario({
         onSubmit={onSubmit}
       >
         {inputs.map((campo) => (
-          <Input
+          <Inputs
             key={campo.name}
             label={campo.label}
             name={campo.name}
@@ -86,11 +86,12 @@ export function LoginFormulario({
 
         <div className="login-form-acciones">
           <Boton
-            label={carga ? "Iniciando sesión…" : "Iniciar sesión"}
-            variante="primario"
-            icono={null}
+            texto={carga ? "Iniciando sesión…" : "Iniciar sesión"}
+            clase="aceptar"
+            logo="Go"
             type="submit"
-            disabled={carga}
+            disable={carga}
+            onClick={() => {}}
           />
         </div>
       </form>

@@ -42,6 +42,17 @@ export interface LoginError {
   code?: string;
 }
 
+type TipoInput =
+  | "text"
+  | "password"
+  | "email"
+  | "number"
+  | "date"
+  | "checkbox"
+  | "radio"
+  | "file"
+  | "tel";
+
 /**
  * Metadatos de un campo del formulario (adición menor: no estaba entre los
  * 5 tipos del plan §1.1; la prop `inputs` del formulario los necesita).
@@ -52,7 +63,7 @@ export interface LoginInput {
   /** Etiqueta visible del campo. */
   label: string;
   /** Tipo nativo del `input`. */
-  type: string;
+  type: TipoInput ;
   /** Texto de ayuda dentro del campo. */
   placeholder: string;
   /** Pista de autocompletado del navegador. */
