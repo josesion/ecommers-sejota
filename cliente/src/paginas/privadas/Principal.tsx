@@ -1,9 +1,8 @@
 /**
  * Página privada principal tras el inicio de sesión.
  *
- * Por ahora funciona como galería de componentes: botones, inputs,
- * selector, cargando (skeleton) y error, de cada tipo y estado,
- * para revisar el diseño.
+ * Funciona como galería de componentes: botones, inputs,
+ * selector, cargando (skeleton), error y notificaciones.
  *
  * @returns Vista principal privada.
  */
@@ -17,6 +16,8 @@ import { ComponenteCargando } from "../../componentes/personales/Cargando/Cargan
 import { CompoError } from "../../componentes/personales/Error/Error";
 import { SelectorOpt } from "../../componentes/personales/CompSelecObt/SelectorOpt";
 import { Navbar } from "../../componentes/MenuNavegacion/BarraNav/NavBar";
+// Importamos el hook de notificaciones
+import { useNotificaciones } from "../../contexto/notificaciones.context";
 
 import {
   Itemnav,
@@ -35,19 +36,55 @@ const mockNavItem: NavItem = {
   label: "Vestidos de Alta Gama",
   icono: <GiDress size={20} aria-hidden="true" />,
 };
+
 export default function Principal() {
   const [seleccion, setSeleccion] = useState("");
 
+  // Extraemos las funciones del provider de notificaciones
+  const { exito, error, info } = useNotificaciones();
+
   return (
     <>
-      <Navbar />{" "}
+      <Navbar />
       <main className="principal">
         <h1 id="principal-titulo" className="principal-titulo">
-          Principal
+          Galería de Componentes - Maison Noir
         </h1>
 
         <section>
           <Itemnav item={mockNavItem} />
+        </section>
+
+        {/* ===== NOTIFICACIONES (NUEVO) ===== */}
+        <section
+          className="principal_seccion"
+          aria-labelledby="titulo-notificaciones"
+        >
+          <h2 id="titulo-notificaciones" className="principal_subtitulo">
+            Notificaciones (Toasts)
+          </h2>
+          <div className="principal_botones">
+            <Boton
+              onClick={() => exito("¡La operación se completó correctamente!")}
+              clase="aceptar"
+              logo="Check"
+              texto="Probar Éxito"
+            />
+            <Boton
+              onClick={() => info("Este es un aviso informativo del sistema.")}
+              clase="agregar"
+              logo="Go"
+              texto="Probar Info"
+            />
+            <Boton
+              onClick={() =>
+                error("Ocurrió un error crítico al procesar los datos.")
+              }
+              clase="eliminar"
+              logo="Cancel"
+              texto="Probar Error"
+            />
+          </div>
         </section>
 
         {/* ===== BOTONES ===== */}
@@ -118,7 +155,6 @@ export default function Principal() {
             Inputs
           </h2>
 
-          {/* Un input de cada tipo */}
           <div className="principal_inputs">
             <Inputs
               label="Texto"
@@ -165,7 +201,6 @@ export default function Principal() {
             />
           </div>
 
-          {/* Radios: mismo name, id distinto en cada uno */}
           <h3 className="principal_subtitulo principal_subtitulo--chico">
             Grupo de radios
           </h3>
@@ -186,7 +221,6 @@ export default function Principal() {
             />
           </div>
 
-          {/* Estados */}
           <h3 className="principal_subtitulo principal_subtitulo--chico">
             Estados
           </h3>
