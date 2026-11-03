@@ -28,6 +28,7 @@ export interface CategoriaCreada {
 export interface CategoriaExistente {
   id_categoria: number;
   slug: string;
+  activo : number
 }
 
 /**

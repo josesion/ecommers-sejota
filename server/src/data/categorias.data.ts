@@ -204,21 +204,34 @@ const modificacion = async (
  * @param {number} data.id_categoria - Categoría a dar de baja.
  * @returns {Promise<TipadoData<{ id_categoria: number }>>} `CATEGORIAS_MODIFICAR`, o lanza `ClientError` 404 si no está activa.
  */
-const baja = async (data: {
-  id_categoria: number;
+const estadoCategoria = async (data: {
+  id_categoria: number, activo : number
 }): Promise<TipadoData<{ id_categoria: number }>> => {
   const slqEntidad = `UPDATE categorias
                       SET activo = 0, actualizado_en = CURRENT_TIMESTAMP
-                      WHERE id_categoria = ? AND activo = 1`;
+                      WHERE id_categoria = ? AND activo = ?`;
 
   return iudEntidad<{ id_categoria: number }>({
     slqEntidad,
-    valores: [data.id_categoria],
+    valores: [data.id_categoria, data.activo],
     entidad: "Categorias",
     metodo: "MODIFICAR",
     datosRetorno: { id_categoria: data.id_categoria },
   });
 };
+
+
+const busquedaCategoria= async (data: {
+  id_categoria: number;
+}): Promise<TipadoData<CategoriaExistente>> => {
+  const slqEntidad = `SELECT id_categoria, slug, activo FROM categorias WHERE id_categoria = ?`;
+  return buscarExistenteEntidad<CategoriaExistente>({
+    slqEntidad,
+    valores: [data.id_categoria],
+    entidad: "Categoria",
+  });
+};
+
 
 export const method = {
   verificacionSlug: tryCatchDatos(verificacionSlug, "categoria", "f"),
@@ -226,5 +239,6 @@ export const method = {
   alta: tryCatchDatos(alta, "categoria", "f"),
   listado: tryCatchDatos(listado, "categoria", "f"),
   modificacion: tryCatchDatos(modificacion, "categoria", "f"),
-  baja: tryCatchDatos(baja, "categoria", "f"),
+  estadoCategoria: tryCatchDatos(estadoCategoria, "categoria", "f"),
+  busquedaCategoria : tryCatchDatos( busquedaCategoria, "f" )
 };

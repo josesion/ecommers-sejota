@@ -7,6 +7,6 @@ const rutas = Router();
 rutas.get("/api/categorias", permisos.validarPermiso, permisos.soloAdmin, controladorCategorias.listar);
 rutas.post("/api/categorias", permisos.validarPermiso, permisos.soloAdmin, controladorCategorias.crear);
 rutas.put("/api/categorias", permisos.validarPermiso, permisos.soloAdmin, controladorCategorias.modificar);
-rutas.delete("/api/categorias", permisos.validarPermiso, permisos.soloAdmin, controladorCategorias.baja);
+rutas.put("/api/categorias_estado", permisos.validarPermiso, permisos.soloAdmin, controladorCategorias.baja);
 
 export default rutas;

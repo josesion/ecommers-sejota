@@ -195,34 +195,36 @@ const baja = async (
 ): Promise<TipadoData<{ id_categoria: number }>> => {
   const dataValida = CategoriaBajaSchema.parse(dataEntrada);
 
-  // Verifica que la categoría esté activa antes de darla de baja.
-  // El hook invierte la señalización: con el filtro `activo = 1`,
-  // `CATEGORIA_NO_EXISTE` significa que NO hay fila activa (ya fue dada
-  // de baja o no existe), y `CATEGORIA_EXISTE` que está activa.
-  const verificacion = await categoriasData.verificacionActiva({
-    id_categoria: dataValida.id_categoria,
+  const categoria = await categoriasData.busquedaCategoria({
+    id_categoria: dataValida.id_categoria
   });
 
-  if (verificacion.code === "CATEGORIA_NO_EXISTE") {
-    return {
-      error: true,
-      message: "La categoría ya se encuentra dada de baja",
-      code: "CATEGORIA_YA_DADO_DE_BAJA",
-    };
-  }
+  if ( categoria.code === "CATEGORIA_NO_EXISTE"){
+      return {
+        error : true,
+        message : "No existe esta Categoria.",
+        code : "NO_EXISTE_CATEGORIA"
+      }
+  };
 
-  const resultado = await categoriasData.baja({
-    id_categoria: dataValida.id_categoria,
-  });
+  if ( categoria.code === "CATEGORIA_EXISTE"){
+      const estado =  categoria.data?.activo === 1 ? 0 : 1;
+      const mensaje = categoria.data?.activo === 1 
+            ? "Categoría dada de baja"
+            : "Categoría dada de alta"
+      const resultado = await categoriasData.estadoCategoria({
+        id_categoria: dataValida.id_categoria, activo : estado
+      });
 
-  if (resultado.code === "CATEGORIAS_MODIFICAR") {
-    return {
-      error: false,
-      message: "Categoría dada de baja",
-      data: resultado.data,
-      code: "CATEGORIA_DADA_DE_BAJA",
-    };
-  }
+      if (resultado.code === "CATEGORIAS_MODIFICAR") {
+        return {
+          error: false,
+          message: mensaje,
+          data: resultado.data,
+          code: "CATEGORIA_DADA_DE_BAJA",
+        };
+      }; 
+  };
 
   return {
     error: true,
