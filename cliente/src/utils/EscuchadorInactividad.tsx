@@ -1,60 +1,84 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexto/AuthContext";
 import { useNotificaciones } from "../contexto/notificaciones.context";
 
-// Tiempo máximo de inactividad en milisegundos (ejemplo: 15 minutos)
-const TIEMPO_LIMITE_INACTIVIDAD = 15 * 60 * 1000;
+const TIEMPO_LIMITE_INACTIVIDAD = 15 * 60 * 1000; // ojo: tenías 1 min
+const INTERVALO_REVISION = 10 * 1000;
+const CLAVE_TIMESTAMP = "ultimo_timestamp";
 
 export function EscuchadorInactividad() {
   const { limpiarSesion, sesion } = useAuth();
-  const { error } = useNotificaciones();
+  const { info } = useNotificaciones();
   const navigate = useNavigate();
 
+  // Siempre apunta a las últimas versiones, sin re-disparar el efecto
+  const accionesRef = useRef({ limpiarSesion, info, navigate });
+  accionesRef.current = { limpiarSesion, info, navigate };
+
   useEffect(() => {
-    // Si no hay sesión activa, no hacemos nada
     if (!sesion) return;
 
-    const actualizarUltimaActividad = () => {
-      localStorage.setItem("ultimo_timestamp", Date.now().toString());
+    const haExpirado = () => {
+      const ultimo = localStorage.getItem(CLAVE_TIMESTAMP);
+      return (
+        ultimo !== null &&
+        Date.now() - Number(ultimo) > TIEMPO_LIMITE_INACTIVIDAD
+      );
     };
 
-    // Actualizamos la actividad cuando el usuario hace cosas en la página
-    window.addEventListener("mousemove", actualizarUltimaActividad);
-    window.addEventListener("keydown", actualizarUltimaActividad);
-    window.addEventListener("click", actualizarUltimaActividad);
+    const cerrarPorInactividad = () => {
+      const { limpiarSesion, info, navigate } = accionesRef.current;
+      localStorage.removeItem(CLAVE_TIMESTAMP);
+      limpiarSesion();
+      info("Tu sesión ha expirado por inactividad.");
+      navigate("/login", { replace: true });
+    };
 
-    // El evento clave: cuando el usuario vuelve a la pestaña o abre la app en el celu
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        const ultimoTimestamp = localStorage.getItem("ultimo_timestamp");
-
-        if (ultimoTimestamp) {
-          const tiempoTranscurrido = Date.now() - Number(ultimoTimestamp);
-
-          // Si el usuario estuvo ausente más del tiempo límite:
-          if (tiempoTranscurrido > TIEMPO_LIMITE_INACTIVIDAD) {
-            limpiarSesion();
-            localStorage.removeItem("ultimo_timestamp");
-            error("Tu sesión ha expirado por inactividad.");
-            navigate("/login", { replace: true });
-          }
-        }
+    // Interacción / regreso a la app: si expiró, cierra; si no, renueva
+    const verificarYActualizar = () => {
+      if (haExpirado()) {
+        cerrarPorInactividad();
+        return;
       }
+      localStorage.setItem(CLAVE_TIMESTAMP, Date.now().toString());
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    // Solo revisa, NO renueva (no es actividad del usuario)
+    const revisarSolo = () => {
+      if (haExpirado()) cerrarPorInactividad();
+    };
 
-    // Inicializamos la marca de tiempo al montar
-    actualizarUltimaActividad();
+    const manejarVisibilidad = () => {
+      if (document.visibilityState === "visible") verificarYActualizar();
+    };
+
+    // Al montar: si ya había un timestamp viejo, respetarlo en vez de pisarlo
+    verificarYActualizar();
+
+    const eventosWindow = [
+      "click",
+      "keydown",
+      "touchstart",
+      "focus",
+      "pageshow",
+    ] as const;
+    eventosWindow.forEach((e) =>
+      window.addEventListener(e, verificarYActualizar),
+    );
+    document.addEventListener("visibilitychange", manejarVisibilidad);
+
+    // Red de seguridad: detecta expiración aunque no llegue ningún evento
+    const intervalo = setInterval(revisarSolo, INTERVALO_REVISION);
 
     return () => {
-      window.removeEventListener("mousemove", actualizarUltimaActividad);
-      window.removeEventListener("keydown", actualizarUltimaActividad);
-      window.removeEventListener("click", actualizarUltimaActividad);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      eventosWindow.forEach((e) =>
+        window.removeEventListener(e, verificarYActualizar),
+      );
+      document.removeEventListener("visibilitychange", manejarVisibilidad);
+      clearInterval(intervalo);
     };
-  }, [sesion, limpiarSesion, error, navigate]);
+  }, [sesion]);
 
   return null;
 }
