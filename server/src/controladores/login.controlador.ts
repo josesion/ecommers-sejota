@@ -45,6 +45,7 @@ const loginUsuario = async (req: Request, res: Response) => {
   const config = MAPA_LOGIN[resultado.code] ?? ERROR_SERVIDOR;
   const esExito = config.status >= 200 && config.status < 300;
 
+  console.log(resultado)
 
   if (!esExito) {
     return enviarResponseError(
@@ -57,10 +58,14 @@ const loginUsuario = async (req: Request, res: Response) => {
 
   const datos = resultado.data as NonNullable<typeof resultado.data>;
 
+  const expiracionToken : number = resultado.data?.rol === "admin" 
+        ? 60 * 60 * 1000 
+        : 7 * 24 * 60 * 60 * 1000
+
   res.cookie(COOKIE_TOKEN, datos.token, {
     httpOnly: true,
     sameSite: "lax",
-    maxAge: 60 * 60 * 1000,
+    maxAge: expiracionToken,
   });
 
   // El token viaja solo en la cookie, nunca en el body.
