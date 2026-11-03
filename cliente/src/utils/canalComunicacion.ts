@@ -1,8 +1,11 @@
 
+import { useNotificaciones } from "../contexto/notificaciones.context";
+
+const { error } = useNotificaciones();
+
 interface DataCanalPeticion{
     nombreCanal : string,
     mensaje : string,
-    dispatchError :React.Dispatch<any>;
     error : string,
 };
 
@@ -15,12 +18,10 @@ interface DataCanalPeticion{
 export const peticionComunicacion = ( data : DataCanalPeticion) => {
     try {
         const canalComunicacion = new BroadcastChannel( data.nombreCanal );
-        canalComunicacion.postMessage( data.mensaje );        
-    } catch (error) {
-        data.dispatchError({ 
-            type: data.error, 
-            payload: "Error al establecer conexión con el canal" 
-        });
+        canalComunicacion.postMessage( data.mensaje );  
+        canalComunicacion.close();      
+    } catch (e) {
+        error("Error al enviar mensaje por el canal" );
     }
 };
 
@@ -28,7 +29,6 @@ export const peticionComunicacion = ( data : DataCanalPeticion) => {
 interface DataCanalRecepcion{
     nombreCanal : string,
     mensaje : string
-    dispatchError :React.Dispatch<any>;
     dispatchActualizar?:React.Dispatch<any>;
     error : string,
     actualizar? : string,
@@ -53,11 +53,7 @@ export const recepcionComunicacion = (data: DataCanalRecepcion) => {
 
         return () => canalComunicacion.close();
 
-    } catch (error) {
-     
-        data.dispatchError({ 
-            type: data.error, 
-            payload: "Error al establecer conexión con el canal" 
-        });
+    } catch (e) {
+        error("Error al establecer conexión con el canal" );
     }
 };
