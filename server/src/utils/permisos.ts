@@ -103,6 +103,7 @@ export const soloAdmin = async (
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
+
   if (req.usuario?.rol !== "admin") {
     return enviarResponseError(
       res,

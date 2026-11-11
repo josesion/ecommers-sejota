@@ -10,7 +10,11 @@ import { enviarResponseError } from "./utils/responseError";
 import usuariosRuta from "./rutas/usuarios.ruta";
 import loginRuta from "./rutas/login.ruta";
 import categoriasRuta from "./rutas/categorias.ruta";
+import tallesRuta from "./rutas/talles.ruta";
+
 import productosRuta from "./rutas/productos.ruta";
+
+import coloresRuta from "./rutas/colores.ruta";
 
 
 // ** LIMITADOR DE PETICIONES **/
@@ -23,7 +27,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://192.168.1.12:5173",
+      "http://192.168.1.20:5174",
+     
     ],
     credentials: true,
   }),
@@ -35,11 +40,18 @@ app.use(cookieParser());
 app.use(globalLimiter);
 
 
+
+
 /** REGISTRO DE RUTAS */
 app.use(loginRuta);
 app.use(usuariosRuta);
 app.use(categoriasRuta);
+app.use(tallesRuta);
+
+
 app.use(productosRuta);
+
+app.use(coloresRuta);
 
 /** MANEJADOR GLOBAL DE ERRORES */
 app.use((err: Error, __req: Request, res: Response, __next: NextFunction) => {
